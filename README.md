@@ -12,4 +12,9 @@ This project is dedicated to <strong>J Withey</strong> for giving me the motivat
 This fork
 ==========================
 
-Fixed bug for null-divider if user has not defined in layout-xml for the list.
+- gradle project structure
+- tweaked slide up/down animations
+- add 'animated="false" to AnimatedExpandableListView to disable slide up/down animations
+- add 'auto_scroll="true"' to automatically scroll to expanded position, this also enables 'animated="true".
+- add 'expand_one="true"' to allow only one expanded row at a time, this also enables both 'animate="true"' and
+'auto_scroll="true"' 
