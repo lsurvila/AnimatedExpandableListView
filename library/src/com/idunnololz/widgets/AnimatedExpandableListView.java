@@ -14,10 +14,7 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.view.animation.Transformation;
-import android.widget.AbsListView;
-import android.widget.BaseExpandableListAdapter;
-import android.widget.ExpandableListAdapter;
-import android.widget.ExpandableListView;
+import android.widget.*;
 
 /**
  * This class defines an ExpandableListView which supports animations for
@@ -127,6 +124,13 @@ public class AnimatedExpandableListView extends ExpandableListView {
         }
     };
 
+    private OnGroupExpandListener autoScrollToOnGroupExpandListener = new OnGroupExpandListener() {
+
+        @Override
+        public void onGroupExpand(int groupPosition) {
+            smoothScrollToPositionFromTop(groupPosition, 0, ANIMATION_DURATION);
+        }
+    };
 
     private void init(Context context, AttributeSet attrs) {
         if (attrs != null) {
@@ -135,6 +139,11 @@ public class AnimatedExpandableListView extends ExpandableListView {
             if (animated) {
                 setOnGroupClickListener(animatedOnGroupClickListener);
             }
+            boolean autoScroll = typedArray.getBoolean(R.styleable.AnimatedExpandableListView_auto_scroll, false);
+            if (autoScroll) {
+                setOnGroupExpandListener(autoScrollToOnGroupExpandListener);
+            }
+
             typedArray.recycle();
         }
 
