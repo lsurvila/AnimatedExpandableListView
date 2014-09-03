@@ -1,0 +1,7 @@
+<resources>
+
+    <declare-styleable name="AnimatedExpandableListView">
+        <attr name="animated" format="boolean"/>
+    </declare-styleable>
+
+</resources>

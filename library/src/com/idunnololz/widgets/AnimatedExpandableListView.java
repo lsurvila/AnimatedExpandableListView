@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
@@ -101,14 +102,43 @@ public class AnimatedExpandableListView extends ExpandableListView {
 
     public AnimatedExpandableListView(Context context) {
         super(context);
+        init(context, null);
     }
 
     public AnimatedExpandableListView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        init(context, attrs);
     }
 
     public AnimatedExpandableListView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+        init(context, attrs);
+    }
+
+    private OnGroupClickListener animatedOnGroupClickListener = new OnGroupClickListener() {
+        @Override
+        public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
+            if (isGroupExpanded(groupPosition)) {
+                collapseGroupWithAnimation(groupPosition);
+            } else {
+                expandGroupWithAnimation(groupPosition);
+            }
+            return true;
+        }
+    };
+
+
+    private void init(Context context, AttributeSet attrs) {
+        if (attrs != null) {
+            TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.AnimatedExpandableListView, 0, 0);
+            boolean animated = typedArray.getBoolean(R.styleable.AnimatedExpandableListView_animated, true);
+            if (animated) {
+                setOnGroupClickListener(animatedOnGroupClickListener);
+            }
+            typedArray.recycle();
+        }
+
+
     }
 
     /**
