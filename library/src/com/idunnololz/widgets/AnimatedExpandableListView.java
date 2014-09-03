@@ -124,13 +124,28 @@ public class AnimatedExpandableListView extends ExpandableListView {
         }
     };
 
-    private OnGroupExpandListener autoScrollToOnGroupExpandListener = new OnGroupExpandListener() {
 
-        @Override
-        public void onGroupExpand(int groupPosition) {
-            smoothScrollToPositionFromTop(groupPosition, 0, ANIMATION_DURATION);
-        }
-    };
+
+    private void setAutoScroll(final boolean onlyOneExpanded) {
+        OnGroupExpandListener autoScrollToOnGroupExpandListener = new OnGroupExpandListener() {
+
+            private int previousGroup = -1;
+
+            private int onlyOneExpandedOffset = 3;
+
+            @Override
+            public void onGroupExpand(int groupPosition) {
+                if (onlyOneExpanded && groupPosition != previousGroup && isGroupExpanded(previousGroup)) {
+                    collapseGroupWithAnimation(previousGroup);
+                    int selectGroup = groupPosition >= onlyOneExpandedOffset ? groupPosition - onlyOneExpandedOffset : 0;
+                    setSelectedGroup(selectGroup);
+                }
+                previousGroup = groupPosition;
+                smoothScrollToPositionFromTop(groupPosition, 0, ANIMATION_DURATION);
+            }
+        };
+        setOnGroupExpandListener(autoScrollToOnGroupExpandListener);
+    }
 
     private void init(Context context, AttributeSet attrs) {
         if (attrs != null) {
@@ -140,10 +155,11 @@ public class AnimatedExpandableListView extends ExpandableListView {
                 setOnGroupClickListener(animatedOnGroupClickListener);
             }
             boolean autoScroll = typedArray.getBoolean(R.styleable.AnimatedExpandableListView_auto_scroll, false);
-            if (autoScroll) {
-                setOnGroupExpandListener(autoScrollToOnGroupExpandListener);
+            boolean onlyOneExpanded = typedArray.getBoolean(R.styleable.AnimatedExpandableListView_expand_one, false);
+            if (autoScroll || onlyOneExpanded) {
+                setOnGroupClickListener(animatedOnGroupClickListener);
+                setAutoScroll(onlyOneExpanded);
             }
-
             typedArray.recycle();
         }
 

@@ -3,6 +3,7 @@
     <declare-styleable name="AnimatedExpandableListView">
         <attr name="animated" format="boolean"/>
         <attr name="auto_scroll" format="boolean"/>
+        <attr name="expand_one" format="boolean"/>
     </declare-styleable>
 
 </resources>
