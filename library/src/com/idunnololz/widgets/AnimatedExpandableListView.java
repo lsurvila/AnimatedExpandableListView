@@ -424,9 +424,10 @@ public class AnimatedExpandableListView extends ExpandableListView {
 
                 Object o;
                 int state = (o = dummyView.getTag()) == null ? STATE_IDLE : (Integer) o;
+                int animationHeight = totalHeight < clipHeight ? totalHeight : clipHeight;
 
                 if (info.expanding && state != STATE_EXPANDING) {
-                    ExpandAnimation ani = new ExpandAnimation(dummyView, 0, totalHeight, info);
+                    ExpandAnimation ani = new ExpandAnimation(dummyView, 0, animationHeight, info);
                     ani.setDuration(this.parent.getAnimationDuration());
                     ani.setAnimationListener(new AnimationListener() {
 
@@ -451,7 +452,7 @@ public class AnimatedExpandableListView extends ExpandableListView {
                         info.dummyHeight = totalHeight;
                     }
 
-                    ExpandAnimation ani = new ExpandAnimation(dummyView, info.dummyHeight, 0, info);
+                    ExpandAnimation ani = new ExpandAnimation(dummyView, animationHeight, 0, info);
                     ani.setDuration(this.parent.getAnimationDuration());
                     ani.setAnimationListener(new AnimationListener() {
 
