@@ -20,5 +20,4 @@ This fork
 'auto_scroll="true"' 
 
 gradle include:
-
-compile 'com.lsurvila.utils.animatedexpandablelistview:library:0.1'
+<code>compile 'com.lsurvila.utils.animatedexpandablelistview:library:0.1'</code>
