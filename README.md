@@ -18,3 +18,7 @@ This fork
 - add 'auto_scroll="true"' to automatically scroll to expanded position, this also enables 'animated="true".
 - add 'expand_one="true"' to allow only one expanded row at a time, this also enables both 'animate="true"' and
 'auto_scroll="true"' 
+
+gradle include:
+
+compile 'com.lsurvila.utils.animatedexpandablelistview:library:0.1'
