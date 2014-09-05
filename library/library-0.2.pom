@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.lsurvila.utils.animatedexpandablelistview</groupId>
     <artifactId>library</artifactId>
-    <version>0.1</version>
+    <version>0.2</version>
     <packaging>aar</packaging>
     <name>animated-expandable-list-view</name>
     <description>An extendable, flexible ExpandableListView widget that supports animations.</description>

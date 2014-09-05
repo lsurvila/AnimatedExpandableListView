@@ -35,7 +35,7 @@ android {
     }
 
     task sourcesJar(type: Jar) {
-        classifier = 'sources-0.1'
+        classifier = 'sources-0.2'
         from sourceSets.main.java.srcDirs
     }
 

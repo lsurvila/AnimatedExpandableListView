@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
-import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
@@ -15,6 +14,8 @@ import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.view.animation.Transformation;
 import android.widget.*;
+
+import com.lsurvila.utils.ViewUtils;
 
 /**
  * This class defines an ExpandableListView which supports animations for
@@ -99,17 +100,17 @@ public class AnimatedExpandableListView extends ExpandableListView {
 
     public AnimatedExpandableListView(Context context) {
         super(context);
-        init(context, null);
+        init(null);
     }
 
     public AnimatedExpandableListView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        init(context, attrs);
+        init(attrs);
     }
 
     public AnimatedExpandableListView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        init(context, attrs);
+        init(attrs);
     }
 
     private OnGroupClickListener animatedOnGroupClickListener = new OnGroupClickListener() {
@@ -147,23 +148,19 @@ public class AnimatedExpandableListView extends ExpandableListView {
         setOnGroupExpandListener(autoScrollToOnGroupExpandListener);
     }
 
-    private void init(Context context, AttributeSet attrs) {
+    private void init(AttributeSet attrs) {
         if (attrs != null) {
-            TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.AnimatedExpandableListView, 0, 0);
-            boolean animated = typedArray.getBoolean(R.styleable.AnimatedExpandableListView_animated, true);
+            boolean animated = ViewUtils.getBooleanAttribute(attrs, "animated", true);
             if (animated) {
                 setOnGroupClickListener(animatedOnGroupClickListener);
             }
-            boolean autoScroll = typedArray.getBoolean(R.styleable.AnimatedExpandableListView_auto_scroll, false);
-            boolean onlyOneExpanded = typedArray.getBoolean(R.styleable.AnimatedExpandableListView_expand_one, false);
+            boolean autoScroll = ViewUtils.getBooleanAttribute(attrs, "auto_scroll", false);
+            boolean onlyOneExpanded = ViewUtils.getBooleanAttribute(attrs, "expand_one", false);
             if (autoScroll || onlyOneExpanded) {
                 setOnGroupClickListener(animatedOnGroupClickListener);
                 setAutoScroll(onlyOneExpanded);
             }
-            typedArray.recycle();
         }
-
-
     }
 
     /**
